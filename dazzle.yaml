@@ -1,0 +1,13 @@
+# for now we ignore all the old extra images
+ignore:
+- dart
+- dotnet*
+- flutter
+- full
+- full-vnc
+- gecko
+- mdbook
+- mongodb
+- mysql
+- postgres
+- rethinkdb
