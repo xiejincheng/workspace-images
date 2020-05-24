@@ -2,9 +2,11 @@ ARG base
 FROM ${base}
 
 USER gitpod
+ENV HOME=/home/gitpod
 ENV NODE_VERSION=12.16.3
-RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | PROFILE=/dev/null bash \
-    && bash -c ". .nvm/nvm.sh \
+WORKDIR $HOME
+RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | PROFILE=/dev/null bash
+RUN bash -c ". .nvm/nvm.sh \
         && nvm install $NODE_VERSION \
         && nvm alias default $NODE_VERSION \
         && npm install -g npm typescript yarn" \

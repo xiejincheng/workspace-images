@@ -2,6 +2,8 @@ ARG base
 FROM ${base}
 
 USER gitpod
+ENV HOME=/home/gitpod
+WORKDIR $HOME
 RUN sudo apt-get update \
     && DEBIAN_FRONTEND=noninteractive sudo apt-get install -yq \
         # Enable Rust static binary builds

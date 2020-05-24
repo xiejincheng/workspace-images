@@ -2,6 +2,8 @@ ARG base
 FROM ${base}
 
 USER gitpod
+ENV HOME=/home/gitpod
+WORKDIR $HOME
 ENV PATH=$HOME/.pyenv/bin:$HOME/.pyenv/shims:$PATH
 RUN curl -fsSL https://github.com/pyenv/pyenv-installer/raw/master/bin/pyenv-installer | bash \
     && { echo; \
