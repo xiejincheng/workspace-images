@@ -1,4 +1,15 @@
-# for now we ignore all the old extra images
+combinations:
+- name: full
+  chunks:
+  - lang-c
+  - lang-go
+  - lang-java
+  - lang-node
+  - lang-python
+  - lang-ruby
+  - lang-rust
+  - tool-brew
+  - tool-nginx
 ignore:
 - dart
 - dotnet*
