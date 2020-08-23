@@ -1,14 +1,32 @@
 version: 2.0
 
 jobs:
+  workspace-thin:
+    docker:
+      - image: docker:stable
+    steps:
+      - checkout
+      - setup_remote_docker
+      - run:
+          command: |
+            ./.circleci/build_image.sh thin/Dockerfile gitpod/workspace-thin
+            docker save gitpod/workspace-thin -o workspace-thin.tar
+      - persist_to_workspace:
+          root: .
+          paths:
+            - workspace-thin.tar
+
   workspace-full:
     docker:
       - image: csweichel/dazzle:latest
     steps:
       - checkout
       - setup_remote_docker
+      - attach_workspace:
+          at: .
       - run:
           command: |
+            docker load -i workspace-thin.tar
             ./.circleci/dazzle_build_image.sh full/Dockerfile gitpod/workspace-full workspace-full.tar
           no_output_timeout: 30m
       - run:
@@ -171,7 +189,10 @@ workflows:
   version: 2
   build-and-deploy:
     jobs:
-      - workspace-full
+      - workspace-thin
+      - workspace-full:
+          requires:
+            - workspace-thin
       - workspace-full-vnc:
           requires:
             - workspace-full
