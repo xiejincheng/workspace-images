@@ -1,15 +1,22 @@
-combinations:
-- name: full
-  chunks:
-  - lang-c
-  - lang-go
-  - lang-java
-  - lang-node
-  - lang-python
-  - lang-ruby
-  - lang-rust
-  - tool-brew
-  - tool-nginx
+combiner:
+  combinations:
+    - name: base
+    - name: full
+      chunks:
+      - lang-c
+      - lang-go
+      - lang-java
+      - lang-node
+      - lang-python
+      - lang-ruby
+      - lang-rust
+      - tool-brew
+      - tool-nginx
+  envvars:
+    - name: PATH
+      action: merge-unique
+    - name: HOME
+      action: use-last
 ignore:
 - dart
 - dotnet*

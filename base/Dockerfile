@@ -3,7 +3,6 @@ FROM buildpack-deps:focal
 COPY install-packages /usr/bin
 
 ### base ###
-RUN yes
 RUN yes | unminimize \
     && install-packages \
         zip \
