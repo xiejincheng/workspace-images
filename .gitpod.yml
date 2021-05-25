@@ -1,8 +1,5 @@
 image: gitpod/workspace-full
 
-tasks:
-  - command: docker
-
 vscode:
   extensions:
     - ms-azuretools.vscode-docker
