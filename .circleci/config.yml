@@ -23,7 +23,7 @@ jobs:
 
   workspace-base:
     docker:
-      - image: csweichel/dazzle:v0.1.1
+      - image: cluit/dazzle:v0.1.1
     steps:
       - checkout
       - setup_remote_docker:
@@ -37,7 +37,7 @@ jobs:
 
   workspace-full:
     docker:
-      - image: csweichel/dazzle:v0.1.1
+      - image: cluit/dazzle:v0.1.1
     steps:
       - checkout
       - setup_remote_docker:
@@ -51,7 +51,7 @@ jobs:
           
   workspace-full-vnc:
     docker:
-      - image: csweichel/dazzle:v0.1.1
+      - image: cluit/dazzle:v0.1.1
     steps:
       - checkout
       - setup_remote_docker:
