@@ -1,6 +1,11 @@
 #!/bin/sh
 set -xe
 
+SUDO=
+if [ "$(id -u)" -ne 0 ]; then
+  SUDO=sudo
+fi
+
 if [ -z $DOCKER_USER ]; then
   echo "DOCKER_USER is mandatory"
   exit 2
@@ -20,8 +25,8 @@ BUILD_TAG="build-branch-$(echo $CIRCLE_BRANCH | sed 's_/_-_g')"
 # Use heredoc to avoid variable getting exposed in trace output.
 # Use << (<<< herestring is not available in busybox ash).
 # We'll be pushing images using docker.io/gitpod thus must login accordingly
-sudo docker login -u $DOCKER_USER --password-stdin docker.io << EOF
+$SUDO docker login -u $DOCKER_USER --password-stdin docker.io << EOF
 $DOCKER_PASS
 EOF
 
-sudo dazzle -v $*
+$SUDO dazzle -v $*
