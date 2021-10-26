@@ -14,3 +14,7 @@ RUN curl -fsSL https://rvm.io/mpapis.asc | gpg --import - \
         && gem install solargraph --no-document" \
     && echo '[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*' >> /home/gitpod/.bashrc.d/70-ruby
 RUN echo "rvm_gems_path=/workspace/.rvm" > ~/.rvmrc
+
+ENV GEM_HOME=/workspace/.rvm
+ENV GEM_PATH=$GEM_HOME:$GEM_PATH
+ENV PATH=/workspace/.rvm/bin:$PATH

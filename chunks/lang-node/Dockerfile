@@ -1,9 +1,12 @@
 ARG base
 FROM ${base}
 
+ARG NODE_VERSION
+
 USER gitpod
-ENV NODE_VERSION=14.17.0
-RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.37.2/install.sh | PROFILE=/dev/null bash \
+ENV NODE_VERSION=${NODE_VERSION}
+ENV TRIGGER_REBUILD=1
+RUN curl -fsSL https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | PROFILE=/dev/null bash \
     && bash -c ". .nvm/nvm.sh \
         && nvm install $NODE_VERSION \
         && nvm alias default $NODE_VERSION \
