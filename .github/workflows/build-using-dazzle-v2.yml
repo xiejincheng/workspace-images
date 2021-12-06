@@ -4,4 +4,12 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event. There is nothing to be done yet. Consider adding build steps."
+      - name: Checkout dazzle
+        uses: actions/checkout@v2
+        with:
+          repository: gitpod-io/dazzle
+      - name: Setup go
+        uses: actions/setup-go@v2
+      - run: go generate -v ./…
+      - run: go install
+      - run: dazzle
