@@ -24,8 +24,7 @@ jobs:
       - run: sudo buildkitd &
       - run: docker pull registry:2
       - run: docker run -p 5000:5000 --name registry --rm registry:2 &
-      - run: cd dazzle-rewrite
-      - run: sudo $(which dazzle) build localhost:5000/workspace-images
+      - run: cd dazzle-rewrite && sudo $(which dazzle) build localhost:5000/workspace-images
 
 # sudo su -c "cd /usr; curl -L https://github.com/moby/buildkit/releases/download/v0.8.3/buildkit-v0.8.3.linux-amd64.tar.gz | tar xvz"
 # docker run -p 5000:5000 --name registry --rm registry:2
