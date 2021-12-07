@@ -15,4 +15,9 @@ jobs:
       - run: go get -v ./...
       - run: go generate -v ./…
       - run: go install
-      - run: dazzle
+      - run: dazzle # only to ensure dazzle is in the path
+      - name: Checkout workspace-images
+        uses: actions/checkout@v2
+        with:
+          repository: gitpod-io/workspace-images
+      - run: pwd && ls
