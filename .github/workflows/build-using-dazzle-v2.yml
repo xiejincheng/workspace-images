@@ -21,15 +21,8 @@ jobs:
         with:
           repository: gitpod-io/workspace-images
       - run: sudo su -c "cd /usr; curl -L https://github.com/moby/buildkit/releases/download/v0.8.3/buildkit-v0.8.3.linux-amd64.tar.gz | tar xvz"
-      - run: id
-      - run: id -gn
-      - run: sudo id -gn
       - run: sudo buildkitd --group docker &
-      - run: sudo ls -lh /run
       - run: sudo chmod +777 /run/buildkit/buildkitd.sock
-      - run: sudo ls -lh /run
-      - run: sudo ls -lh /run/buildkit
       - run: docker pull registry:2
       - run: docker run -p 5000:5000 --name registry --rm registry:2 &
-      - run: whoami && echo && ls -lh $(which dazzle)
       - run: cd dazzle-rewrite && dazzle build localhost:5000/workspace-images
