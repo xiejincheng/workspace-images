@@ -27,4 +27,5 @@ jobs:
       - run: sudo ls -lh /run/buildkit
       - run: docker pull registry:2
       - run: docker run -p 5000:5000 --name registry --rm registry:2 &
+      - run: whoami && echo && ls -lh $(which dazzle)
       - run: cd dazzle-rewrite && dazzle build localhost:5000/workspace-images
