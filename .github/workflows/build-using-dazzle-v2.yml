@@ -26,7 +26,6 @@ jobs:
       - run: sudo id -gn
       - run: sudo buildkitd --group docker &
       - run: sudo ls -lh /run
-      - run: sudo chown root:runner /run/buildkit
       - run: sudo chmod +777 /run/buildkit/buildkitd.sock
       - run: sudo ls -lh /run
       - run: sudo ls -lh /run/buildkit
