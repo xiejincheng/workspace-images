@@ -8,8 +8,6 @@ jobs:
       id-token: 'write'
 
     steps:
-      - run: gcloud auth configure-docker europe-docker.pkg.dev
-      - run: gcloud artifacts repositories list
       - name: Checkout dazzle
         uses: actions/checkout@v2
         with:
@@ -40,4 +38,5 @@ jobs:
         uses: google-github-actions/setup-gcloud@master
         with:
           version: 366.0.0
+      - run: gcloud auth configure-docker europe-docker.pkg.dev
       - run: cd dazzle-rewrite && gcloud artifacts repositories list && dazzle build europe-docker.pkg.dev/prince-tf-experiments/dazzle/workspace-images
