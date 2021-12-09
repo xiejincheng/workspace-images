@@ -8,17 +8,6 @@ jobs:
       id-token: 'write'
 
     steps:
-      - id: 'auth'
-        name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0.4.2'
-        with:
-          token_format: 'access_token'
-          workload_identity_provider: 'projects/613222737209/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-          service_account: 'workspace-images@prince-tf-experiments.iam.gserviceaccount.com'
-      - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@master
-        with:
-          version: 366.0.0
       - run: gcloud auth configure-docker europe-docker.pkg.dev
       - run: gcloud artifacts repositories list
       - name: Checkout dazzle
@@ -40,4 +29,15 @@ jobs:
       - run: sudo su -c "cd /usr; curl -L https://github.com/moby/buildkit/releases/download/v0.8.3/buildkit-v0.8.3.linux-amd64.tar.gz | tar xvz"
       - run: sudo buildkitd --group docker &
       - run: sudo chmod +777 /run/buildkit/buildkitd.sock
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.4.2'
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: 'projects/613222737209/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
+          service_account: 'workspace-images@prince-tf-experiments.iam.gserviceaccount.com'
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@master
+        with:
+          version: 366.0.0
       - run: cd dazzle-rewrite && gcloud artifacts repositories list && dazzle build europe-docker.pkg.dev/prince-tf-experiments/dazzle/workspace-images
