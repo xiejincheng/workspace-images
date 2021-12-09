@@ -18,7 +18,7 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
-          version: 290.0.1
+          version: 366.0.0
       - run: gcloud info
       - run: gcloud artifacts repositories list
       - run: gcloud auth configure-docker europe-docker.pkg.dev
