@@ -16,8 +16,10 @@ jobs:
         with:
           token_format: 'access_token'
           workload_identity_provider: 'projects/613222737209/locations/global/workloadIdentityPools/my-pool'
-          audience: 'projects/613222737209/locations/global/workloadIdentityPools/my-pool'
+          # audience: 'projects/613222737209/locations/global/workloadIdentityPools/my-pool'
+          audience: '//iam.googleapis.com/projects/613222737209/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
           service_account: 'workspace-images@prince-tf-experiments.iam.gserviceaccount.com'
+          
       - name: Checkout dazzle
         uses: actions/checkout@v2
         with:
