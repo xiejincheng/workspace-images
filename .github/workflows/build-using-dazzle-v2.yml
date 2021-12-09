@@ -20,6 +20,7 @@ jobs:
         with:
           version: 366.0.0
       - run: gcloud auth configure-docker europe-docker.pkg.dev
+      - run: gcloud artifacts repositories list
       - name: Checkout dazzle
         uses: actions/checkout@v2
         with:
