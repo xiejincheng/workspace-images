@@ -3,9 +3,20 @@ on: [push]
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     steps:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v0.3.0
+      - id: 'auth'
+        name: 'Authenticate to Google Cloud'
+        uses: 'google-github-actions/auth@v0.4.1'
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: 'projects/613222737209/locations/global/workloadIdentityPools/my-pool'
+          service_account: 'workspace-images@prince-tf-experiments.iam.gserviceaccount.com'
       - name: Checkout dazzle
         uses: actions/checkout@v2
         with:
@@ -29,3 +40,4 @@ jobs:
       - run: docker pull registry:2
       - run: docker run -p 5000:5000 --name registry --rm registry:2 &
       - run: cd dazzle-rewrite && dazzle build localhost:5000/workspace-images
+
