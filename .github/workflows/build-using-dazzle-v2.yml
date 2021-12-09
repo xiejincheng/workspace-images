@@ -12,10 +12,10 @@ jobs:
         uses: google-github-actions/setup-gcloud@v0.3.0
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0.4.1'
+        uses: 'google-github-actions/auth@v0.4.2'
         with:
           token_format: 'access_token'
-          workload_identity_provider: 'projects/613222737209/locations/global/workloadIdentityPools/my-pool'
+          workload_identity_provider: 'https://iam.googleapis.com/projects/613222737209/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
           # audience: 'projects/613222737209/locations/global/workloadIdentityPools/my-pool'
           audience: 'https://iam.googleapis.com/projects/613222737209/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
           service_account: 'workspace-images@prince-tf-experiments.iam.gserviceaccount.com'
