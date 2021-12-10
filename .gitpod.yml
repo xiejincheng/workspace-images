@@ -5,11 +5,11 @@ ports:
     onOpen: ignore
 
 tasks:
-  - name: start up buildkitd    
-    before: mv /workspace/buildkit/* /usr/bin      
+  - name: start up buildkitd
+    before: sudo mv ./buildkit/* /usr/bin
     command: sudo /usr/bin/buildkitd
   - name: server a local docker registry
-    command: |      
+    command: |
       docker run -p 5000:5000 --name registry --rm registry:2
   - name: get latest version of dazzle, build and test images
     before: |            

@@ -1,7 +1,12 @@
 FROM gitpod/workspace-full
 
+ENV BUILDKIT_VERSION=0.9.0
+ENV BUILDKIT_FILENAME=buildkit-v${BUILDKIT_VERSION}.linux-amd64.tar.gz
+
 # Install custom tools, runtime, etc.
-RUN curl -OL https://github.com/moby/buildkit/releases/download/v0.9.0/buildkit-v0.9.0.linux-amd64.tar.gz \
-    && tar xzfv buildkit-v0.9.0.linux-amd64.tar.gz \
-    && mkdir /workspace/buildkit \
-    && sudo mv bin/* /workspace/buildkit
+RUN mkdir /workspace/buildkit \
+    && curl -OL https://github.com/moby/buildkit/releases/download/v${BUILDKIT_VERSION}/${BUILDKIT_FILENAME} \
+    && tar xzfv ${BUILDKIT_FILENAME} \
+    && rm ${BUILDKIT_FILENAME} \
+    && mkdir ./buildkit \
+    && mv bin/* ./buildkit
