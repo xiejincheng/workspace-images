@@ -6,12 +6,10 @@ ports:
 
 tasks:
   - name: start up buildkitd    
-    command: 
-      sudo /usr/bin/buildkitd &
-      gp sync-done buildkitd
+    before: mv /workspace/buildkit/* /usr/bin      
+    command: sudo /usr/bin/buildkitd
   - name: server a local docker registry
-    command: |
-      gp sync-await buildkitd
+    command: |      
       docker run -p 5000:5000 --name registry --rm registry:2
   - name: get latest version of dazzle, build and test images
     before: |            
