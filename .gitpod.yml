@@ -6,7 +6,6 @@ ports:
 
 tasks:
   - name: start up buildkitd
-    before: sudo mv ./buildkit/* /usr/bin
     command: sudo /usr/bin/buildkitd
   - name: server a local docker registry
     command: |

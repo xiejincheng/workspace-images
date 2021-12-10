@@ -8,5 +8,4 @@ RUN mkdir /workspace/buildkit \
     && curl -OL https://github.com/moby/buildkit/releases/download/v${BUILDKIT_VERSION}/${BUILDKIT_FILENAME} \
     && tar xzfv ${BUILDKIT_FILENAME} \
     && rm ${BUILDKIT_FILENAME} \
-    && mkdir ./buildkit \
-    && mv bin/* ./buildkit
+    && sudo mv bin/* /usr/bin
