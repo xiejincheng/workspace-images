@@ -7,10 +7,12 @@ ports:
 
 tasks:
   - name: start up buildkitd
-    command: sudo /usr/bin/buildkitd
+    command: sudo /usr/bin/buildkitd --group gitpod --debug
   - name: server a local docker registry
     command: |
-      docker run -p 5000:5000 --name registry --rm registry:2
+      mkdir -p /workspace/registry
+      docker run -p 5000:5000 --name registry --rm -v /workspace/registry:/var/lib/registry registry:2 
+    openMode: split-right
   - name: get latest version of dazzle, build and test images
     before: |            
       git clone --depth=1 https://github.com/gitpod-io/dazzle/
@@ -22,7 +24,11 @@ tasks:
       cd ..
     command: |      
       gp await-port 5000
-      cd ./dazzle-rewrite && sudo $(which dazzle) build localhost:5000/dazzle
+      echo "To build and test chunks 'time sudo $(which dazzle) build localhost:5000/dazzle -v --context dazzle-rewrite-test'"
+      echo "To build and test combinations 'time sudo $(which dazzle) combine localhost:5000/dazzle --context dazzle-rewrite-test --all -v'"
+      echo "Image content cached in this workspace...'du -shc /workspace/registry/*'"
+      
+    openMode: tab-after
 
 vscode:
   extensions:

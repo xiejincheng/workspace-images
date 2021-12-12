@@ -14,3 +14,5 @@ RUN curl -o /var/lib/apt/dazzle-marks/llvm.gpg -fsSL https://apt.llvm.org/llvm-s
         clang-tidy \
         gdb \
         lld
+
+USER gitpod
