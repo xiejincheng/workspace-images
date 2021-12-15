@@ -5,7 +5,7 @@ combiner:
       chunks:
       - lang-c
       - lang-clojure
-      - lang-go:1.17.2
+      # - lang-go:1.17.2
       - lang-java
       - lang-node:16.13.0
       - lang-python
