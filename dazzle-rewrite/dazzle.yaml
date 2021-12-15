@@ -8,9 +8,9 @@ combiner:
       - lang-go:1.17.2
       - lang-java
       - lang-node:16.13.0
-      # - lang-python
-      # - lang-ruby
-      # - lang-rust
+      - lang-python
+      - lang-ruby
+      - lang-rust
       # - tool-brew
       # - tool-docker
       # - tool-nginx
