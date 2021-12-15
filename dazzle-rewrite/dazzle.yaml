@@ -1,6 +1,6 @@
 combiner:
   combinations:
-    - name: base
+    # - name: base
     - name: full
       chunks:
       - lang-c
