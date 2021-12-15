@@ -1,6 +1,6 @@
 FROM gitpod/workspace-full
 
-ENV BUILDKIT_VERSION=0.9.0
+ENV BUILDKIT_VERSION=0.9.3
 ENV BUILDKIT_FILENAME=buildkit-v${BUILDKIT_VERSION}.linux-amd64.tar.gz
 
 # Install custom tools, runtime, etc.

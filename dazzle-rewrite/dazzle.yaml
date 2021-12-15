@@ -1,23 +1,22 @@
 combiner:
   combinations:
-    - name: base
-    - name: debugprs
+    - name: full
       chunks:
       - lang-c
-      - lang-clojure
+      - tool-nginx
+      - tool-brew
       - lang-go:1.17.2
       - lang-java
       - lang-node:16.13.0
       - lang-python
       - lang-ruby
-      - lang-rust
-      - tool-brew
+      - lang-rust      
+      - lang-clojure      
       - tool-docker
-      - tool-nginx
+      - tool-tailscale      
       - tool-nix:2.3.14
-      - tool-postgresql
-      - tool-tailscale
-      - tool-vnc
+      # - tool-postgresql      
+      # - tool-vnc
   envvars:
     - name: PATH
       action: merge-unique
