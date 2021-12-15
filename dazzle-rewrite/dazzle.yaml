@@ -1,7 +1,7 @@
 combiner:
   combinations:
     - name: base
-    - name: debug
+    - name: debug2
       chunks:
       - lang-c
       - lang-clojure
@@ -11,9 +11,9 @@ combiner:
       - lang-python
       - lang-ruby
       - lang-rust
-      # - tool-brew
-      # - tool-docker
-      # - tool-nginx
+      - tool-brew
+      - tool-docker
+      - tool-nginx
       # - tool-nix:2.3.14
       # - tool-postgresql
       # - tool-tailscale
