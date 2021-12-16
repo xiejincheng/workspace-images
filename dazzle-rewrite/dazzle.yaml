@@ -14,10 +14,10 @@ combiner:
       - tool-brew
       - tool-docker
       - tool-nginx
-      # - tool-nix:2.3.14
-      # - tool-postgresql
+      - tool-nix:2.3.14
+      - tool-postgresql
       # - tool-tailscale
-      # - tool-vnc
+      - tool-vnc
   envvars:
     - name: PATH
       action: merge-unique
