@@ -1,7 +1,7 @@
 combiner:
   combinations:
     - name: base
-    - name: debug9
+    - name: debug10
       chunks:
       - lang-c
       - lang-clojure
@@ -17,7 +17,7 @@ combiner:
       - tool-nix:2.3.14
       - tool-postgresql
       # - tool-tailscale
-      - tool-vnc
+      # - tool-vnc
   envvars:
     - name: PATH
       action: merge-unique
