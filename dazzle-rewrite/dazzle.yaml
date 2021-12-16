@@ -1,7 +1,7 @@
 combiner:
   combinations:
     - name: base
-    - name: debug8
+    - name: debug9
       chunks:
       - lang-c
       - lang-clojure
@@ -16,7 +16,7 @@ combiner:
       - tool-nginx
       - tool-nix:2.3.14
       - tool-postgresql
-      - tool-tailscale
+      # - tool-tailscale
       - tool-vnc
   envvars:
     - name: PATH
