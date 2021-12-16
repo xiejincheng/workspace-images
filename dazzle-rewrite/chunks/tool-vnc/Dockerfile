@@ -24,8 +24,8 @@ RUN chmod +x /usr/bin/start-vnc-session.sh
 # This is a bit of a hack. At the moment we have no means of starting background
 # tasks from a Dockerfile. This workaround checks, on each bashrc eval, if the X
 # server is running on screen 0, and if not starts Xvfb, x11vnc and novnc.
-RUN echo "export DISPLAY=:0" >> ~/.bashrc
-RUN echo "[ ! -e /tmp/.X0-lock ] && (/usr/bin/start-vnc-session.sh &> /tmp/display-\${DISPLAY}.log)" >> ~/.bashrc
+RUN echo "export DISPLAY=:0" >> /home/gitpod/.bashrc.d/300-vnc
+RUN echo "[ ! -e /tmp/.X0-lock ] && (/usr/bin/start-vnc-session.sh &> /tmp/display-\${DISPLAY}.log)" >> /home/gitpod/.bashrc.d/300-vnc
 
 ### checks ###
 # no root-owned files in the home directory
