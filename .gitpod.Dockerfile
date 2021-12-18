@@ -7,4 +7,5 @@ ENV BUILDKIT_FILENAME=buildkit-v${BUILDKIT_VERSION}.linux-amd64.tar.gz
 RUN curl -OL https://github.com/moby/buildkit/releases/download/v${BUILDKIT_VERSION}/${BUILDKIT_FILENAME} \
     && tar xzfv ${BUILDKIT_FILENAME} \
     && rm ${BUILDKIT_FILENAME} \
-    && sudo mv bin/* /usr/bin
+    && sudo mv bin/* /usr/bin \
+    && sudo apt-get install pigz

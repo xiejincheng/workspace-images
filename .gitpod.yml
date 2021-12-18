@@ -7,7 +7,9 @@ ports:
 
 tasks:
   - name: start up buildkitd
-    command: sudo /usr/bin/buildkitd --debug
+    command: |
+      cd dazzle-rewrite
+      sudo /usr/bin/buildkitd --debug  --config ./buildkitd.toml --group gitpod
   - name: server a local docker registry
     command: |
       mkdir -p /workspace/registry
@@ -23,7 +25,7 @@ tasks:
       go generate -v ./...
       go install
       go build
-      cd ..
+      cd ..      
     command: |      
       cd dazzle-rewrite
       gp await-port 5000
@@ -33,6 +35,7 @@ tasks:
       echo "To list chunk images, which can be tested individually with docker 'sudo $(which dazzle) project image-name $REPO'"
       echo "To list hashes for chunked images 'sudo $(which dazzle) project hash $REPO'"
       echo "To print the combined image maniest 'sudo $(which dazzle) project manifest $REPO'"
+      echo "To inspect layers of a built image 'oci-tool fetch image $REPO:<image-name>'"
       echo "Image content cached in this workspace...'du -shc /workspace/registry/*'"
       
     openMode: tab-after
