@@ -56,7 +56,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@master
         with:
           version: 366.0.0
-      - run: gcloud auth configure-docker europe-docker.pkg.dev
+      - run: gcloud auth configure-docker europe-docker.pkg.dev --quiet
       - run: cd dazzle-rewrite && dazzle build europe-docker.pkg.dev/prince-tf-experiments/workspace-images
       - run: cd dazzle-rewrite && dazzle combine europe-docker.pkg.dev/prince-tf-experiments/workspace-images --all
       # - run: cd dazzle-rewrite && dazzle build europe-docker.pkg.dev/prince-tf-experiments/workspace-images${ARTIFACT_REPO_SUB_PATH}
