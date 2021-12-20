@@ -1,7 +1,7 @@
 combiner:
   combinations:
     - name: base
-    - name: debug20
+    - name: full
       chunks:
       - lang-c
       - lang-clojure

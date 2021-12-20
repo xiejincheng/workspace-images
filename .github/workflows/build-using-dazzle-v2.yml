@@ -1,13 +1,31 @@
 name: Workspace Images Build
-on: [push]
+on: [push, pull_request]
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
       id-token: 'write'
-
+    env:
+      ARTIFACT_REPO_SUB_PATH: ""
     steps:
+      - name: Get branch name (merge)
+        if: github.event_name != 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/} | tr / -)" >> $GITHUB_ENV
+
+      - name: Get branch name (pull request)
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+
+      - name: Set image build repo sub path
+        if: ${{ env.BRANCH_NAME }} != 'master'
+        run: echo "ARTIFACT_REPO_SUB_PATH=$(echo /${{ env.BRANCH_NAME }})" >> $GITHUB_ENV
+
+      - name: Debug docker image subpath
+        run: echo ${{ env.ARTIFACT_REPO_SUB_PATH }}
+
       - name: Checkout dazzle
         uses: actions/checkout@v2
         with:
@@ -20,7 +38,6 @@ jobs:
       - run: go get -v ./...
       - run: go generate -v ./...
       - run: go install
-      - run: dazzle # only to ensure dazzle is in the path
       - name: Checkout workspace-images
         uses: actions/checkout@v2
         with:
@@ -40,5 +57,5 @@ jobs:
         with:
           version: 366.0.0
       - run: gcloud auth configure-docker europe-docker.pkg.dev
-      - run: cd dazzle-rewrite && dazzle build europe-docker.pkg.dev/prince-tf-experiments/dazzle/workspace-images
-      - run: cd dazzle-rewrite && dazzle combine europe-docker.pkg.dev/prince-tf-experiments/dazzle/workspace-images --all -v
+      - run: cd dazzle-rewrite && dazzle build europe-docker.pkg.dev/prince-tf-experiments/workspace-images${ARTIFACT_REPO_SUB_PATH}
+      - run: cd dazzle-rewrite && dazzle combine europe-docker.pkg.dev/prince-tf-experiments/workspace-images${ARTIFACT_REPO_SUB_PATH} --all
