@@ -30,8 +30,7 @@ jobs:
       - name: Checkout dazzle
         uses: actions/checkout@v2
         with:
-          repository: aledbf/dazzle
-          ref: aledbf/deps
+          repository: gitpod-io/dazzle
       - name: Setup go
         uses: actions/setup-go@v2
         with:
