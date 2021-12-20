@@ -23,9 +23,9 @@ jobs:
         if: github.event_name == 'pull_request'
         run: echo "BRANCH_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
-      - name: Set image build repo sub path
-        if: ${{ env.BRANCH_NAME }} != 'master'
-        run: echo "ARTIFACT_REPO_SUB_PATH=$(echo /${{ env.BRANCH_NAME }})" >> $GITHUB_ENV
+      # - name: Set image build repo sub path
+      #   if: ${{ env.BRANCH_NAME }} != 'master'
+      #   run: echo "ARTIFACT_REPO_SUB_PATH=$(echo /${{ env.BRANCH_NAME }})" >> $GITHUB_ENV
 
       - name: Checkout dazzle
         uses: actions/checkout@v2
