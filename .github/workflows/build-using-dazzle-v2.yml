@@ -26,6 +26,12 @@ jobs:
       - name: Debug docker image subpath
         run: echo ${{ env.ARTIFACT_REPO_SUB_PATH }}
 
+      - name: Debug docker image subpath -2
+        run: echo $ARTIFACT_REPO_SUB_PATH
+
+      - name: Debug docker image subpath -3
+        run: echo abc$ARTIFACT_REPO_SUB_PATH
+
       - name: Checkout dazzle
         uses: actions/checkout@v2
         with:
