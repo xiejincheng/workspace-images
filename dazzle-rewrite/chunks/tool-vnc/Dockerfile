@@ -9,6 +9,7 @@ ENV WINDOW_MANAGER="openbox"
 
 USER root
 
+ENV TRIGGER_REBUILD=1
 # Change the default number of virtual desktops from 4 to 1 (footgun)
 RUN sed -ri "s/<number>4<\/number>/<number>1<\/number>/" /etc/xdg/openbox/rc.xml
 

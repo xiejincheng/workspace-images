@@ -5,7 +5,7 @@ ARG NIX_VERSION
 
 ENV NIX_VERSION=${NIX_VERSION}
 # Dazzle does not rebuild a layer until one of its lines are changed. Increase this counter to rebuild this layer.
-ENV TRIGGER_REBUILD=1
+ENV TRIGGER_REBUILD=2
 
 USER root
 RUN addgroup --system nixbld \
