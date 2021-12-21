@@ -52,6 +52,7 @@ jobs:
         uses: google-github-actions/setup-gcloud@master
         with:
           version: 366.0.0
+
       # authenticate here, if we authenticate too early, the docker credential file is unavailable
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
