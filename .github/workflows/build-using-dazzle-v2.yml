@@ -38,6 +38,17 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.17.5
+      - run: go get -v ./...
+      - run: go generate -v ./...
+      - run: go install
+      - name: Checkout workspace-images
+        uses: actions/checkout@v2
+        with:
+          repository: gitpod-io/workspace-images
+      - run: sudo su -c "cd /usr; curl -L https://github.com/moby/buildkit/releases/download/v0.9.3/buildkit-v0.9.3.linux-amd64.tar.gz | tar xvz"
+      - run: sudo buildkitd --group docker &
+      - run: sudo chmod +777 /run/buildkit/buildkitd.sock
+      # authenticate here, if we authenticate too early, the docker credential file is unavailable
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
         uses: 'google-github-actions/auth@v0.4.3'
@@ -50,16 +61,6 @@ jobs:
         with:
           version: 366.0.0
       - run: gcloud auth configure-docker europe-docker.pkg.dev --quiet
-      - run: go get -v ./...
-      - run: go generate -v ./...
-      - run: go install
-      - name: Checkout workspace-images
-        uses: actions/checkout@v2
-        with:
-          repository: gitpod-io/workspace-images
-      - run: sudo su -c "cd /usr; curl -L https://github.com/moby/buildkit/releases/download/v0.9.3/buildkit-v0.9.3.linux-amd64.tar.gz | tar xvz"
-      - run: sudo buildkitd --group docker &
-      - run: sudo chmod +777 /run/buildkit/buildkitd.sock
       - run: cd dazzle-rewrite && dazzle build ${{env.IMAGE_REPO}}
       - run: cd dazzle-rewrite && dazzle combine ${{env.IMAGE_REPO}} --all
       # - run: cd dazzle-rewrite && dazzle build europe-docker.pkg.dev/prince-tf-experiments/workspace-images${ARTIFACT_REPO_SUB_PATH}
