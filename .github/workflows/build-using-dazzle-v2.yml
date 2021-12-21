@@ -11,9 +11,12 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
-      id-token: 'write'
+      id-token: 'write'      
     env:
-      ARTIFACT_REPO_SUB_PATH: ""
+      ARTIFACT_REPO_SUB_PATH: ""            
+      WORKLOAD_IDENTITY_POOL_ID: projects/119379277405/locations/global/workloadIdentityPools/workspace-images-github-actions/providers/workspace-images-gha-provider
+      IMAGE_REPO: europe-docker.pkg.dev/workspace-base-images/workspace-base-images
+      IAM_SERVICE_ACCOUNT: workspace-images-gha-sa@workspace-base-images.iam.gserviceaccount.com
     steps:
       - name: Get branch name (merge)
         if: github.event_name != 'pull_request'
@@ -47,17 +50,17 @@ jobs:
       - run: sudo chmod +777 /run/buildkit/buildkitd.sock
       - id: 'auth'
         name: 'Authenticate to Google Cloud'
-        uses: 'google-github-actions/auth@v0.4.2'
+        uses: 'google-github-actions/auth@v0.4.3'
         with:
           token_format: 'access_token'
-          workload_identity_provider: 'projects/613222737209/locations/global/workloadIdentityPools/my-pool/providers/my-provider'
-          service_account: 'workspace-images@prince-tf-experiments.iam.gserviceaccount.com'
+          workload_identity_provider: "${{env.WORKLOAD_IDENTITY_POOL_ID}}"
+          service_account: "${{env.IAM_SERVICE_ACCOUNT}}"
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
           version: 366.0.0
       - run: gcloud auth configure-docker europe-docker.pkg.dev --quiet
-      - run: cd dazzle-rewrite && dazzle build europe-docker.pkg.dev/prince-tf-experiments/workspace-images
-      - run: cd dazzle-rewrite && dazzle combine europe-docker.pkg.dev/prince-tf-experiments/workspace-images --all
+      - run: cd dazzle-rewrite && dazzle build ${{IMAGE_REPO}}
+      - run: cd dazzle-rewrite && dazzle combine ${{IMAGE_REPO}} --all
       # - run: cd dazzle-rewrite && dazzle build europe-docker.pkg.dev/prince-tf-experiments/workspace-images${ARTIFACT_REPO_SUB_PATH}
       # - run: cd dazzle-rewrite && dazzle combine europe-docker.pkg.dev/prince-tf-experiments/workspace-images${ARTIFACT_REPO_SUB_PATH} --all
