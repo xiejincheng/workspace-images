@@ -61,7 +61,7 @@ jobs:
         with:
           version: 366.0.0
       - run: gcloud auth configure-docker europe-docker.pkg.dev --quiet
-      - run: cd dazzle-rewrite && dazzle build ${{env.IMAGE_REPO}}
+      - run: gcloud beta artifacts packages list && cd dazzle-rewrite && dazzle build ${{env.IMAGE_REPO}}
       - run: cd dazzle-rewrite && dazzle combine ${{env.IMAGE_REPO}} --all
       # - run: cd dazzle-rewrite && dazzle build europe-docker.pkg.dev/prince-tf-experiments/workspace-images${ARTIFACT_REPO_SUB_PATH}
       # - run: cd dazzle-rewrite && dazzle combine europe-docker.pkg.dev/prince-tf-experiments/workspace-images${ARTIFACT_REPO_SUB_PATH} --all
