@@ -15,7 +15,7 @@ jobs:
     env:
       ARTIFACT_REPO_SUB_PATH: ""            
       WORKLOAD_IDENTITY_POOL_ID: projects/119379277405/locations/global/workloadIdentityPools/workspace-images-github-actions/providers/workspace-images-gha-provider
-      IMAGE_REPO: europe-docker.pkg.dev/workspace-base-images/workspace-base-images/images
+      IMAGE_REPO: europe-docker.pkg.dev/workspace-base-images/workspace-base-images/workspace-image
       IAM_SERVICE_ACCOUNT: workspace-images-gha-sa@workspace-base-images.iam.gserviceaccount.com
     steps:
       - name: Get branch name (merge)
