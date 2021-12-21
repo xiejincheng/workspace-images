@@ -11,9 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: 'read'
-      id-token: 'write'      
+      id-token: 'write'
     env:
-      ARTIFACT_REPO_SUB_PATH: ""            
+      ARTIFACT_REPO_SUB_PATH: ""
       WORKLOAD_IDENTITY_POOL_ID: projects/119379277405/locations/global/workloadIdentityPools/workspace-images-github-actions/providers/workspace-images-gha-provider
       IMAGE_REPO: europe-docker.pkg.dev/workspace-base-images/workspace-base-images/workspace-base-images
       IAM_SERVICE_ACCOUNT: workspace-images-gha-sa@workspace-base-images.iam.gserviceaccount.com
@@ -30,24 +30,33 @@ jobs:
       #   if: ${{ env.BRANCH_NAME }} != 'master'
       #   run: echo "ARTIFACT_REPO_SUB_PATH=$(echo /${{ env.BRANCH_NAME }})" >> $GITHUB_ENV
 
-      - name: Checkout dazzle
-        uses: actions/checkout@v2
-        with:
-          repository: gitpod-io/dazzle
       - name: Setup go
         uses: actions/setup-go@v2
         with:
           go-version: 1.17.5
-      - run: go get -v ./...
-      - run: go generate -v ./...
-      - run: go install
+
+      - name: Checkout dazzle
+        uses: actions/checkout@v2
+        with:
+          repository: gitpod-io/dazzle
+
+      - name: Installing dazzle
+        run: |
+          go get -v ./...
+          go generate -v ./...
+          go install
+
       - name: Checkout workspace-images
         uses: actions/checkout@v2
         with:
           repository: gitpod-io/workspace-images
-      - run: sudo su -c "cd /usr; curl -L https://github.com/moby/buildkit/releases/download/v0.9.3/buildkit-v0.9.3.linux-amd64.tar.gz | tar xvz"
-      - run: sudo buildkitd --group docker &
-      - run: sudo chmod +777 /run/buildkit/buildkitd.sock
+
+      - name: Setup buildkit
+        run: |
+          sudo su -c "cd /usr; curl -L https://github.com/moby/buildkit/releases/download/v0.9.3/buildkit-v0.9.3.linux-amd64.tar.gz | tar xvz"
+          sudo buildkitd --oci-worker=true --debug --group docker &
+          sudo chmod +777 /run/buildkit/buildkitd.sock
+
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@master
         with:
@@ -61,8 +70,18 @@ jobs:
           token_format: 'access_token'
           workload_identity_provider: ${{env.WORKLOAD_IDENTITY_POOL_ID}}
           service_account: ${{env.IAM_SERVICE_ACCOUNT}}
-      - run: gcloud auth configure-docker europe-docker.pkg.dev --quiet
-      - run: cd dazzle-rewrite && dazzle build ${{env.IMAGE_REPO}} -v
-      - run: cd dazzle-rewrite && dazzle combine ${{env.IMAGE_REPO}} --all -v
+
+      - name: Configuring container registry credentials
+        run: gcloud auth configure-docker europe-docker.pkg.dev --quiet
+
+      - name: Dazzle build
+        run: |
+          cd dazzle-rewrite
+          dazzle build ${{env.IMAGE_REPO}} -v
+
+      - name: Dazzle combine
+        run: |
+          cd dazzle-rewrite
+          dazzle combine ${{env.IMAGE_REPO}} --all -v
       # - run: cd dazzle-rewrite && dazzle build europe-docker.pkg.dev/prince-tf-experiments/workspace-images${ARTIFACT_REPO_SUB_PATH}
       # - run: cd dazzle-rewrite && dazzle combine europe-docker.pkg.dev/prince-tf-experiments/workspace-images${ARTIFACT_REPO_SUB_PATH} --all
