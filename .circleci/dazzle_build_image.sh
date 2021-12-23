@@ -7,10 +7,10 @@ if [ $# -le 2 ]; then
   exit 2
 fi
 
-if [ -z "$DOCKER_USER" ]; then
-  echo "DOCKER_USER is mandatory"
-  exit 2
-fi
+#if [ -z "$DOCKER_USER" ]; then
+#  echo "DOCKER_USER is mandatory"
+#  exit 2
+#fi
 
 DIR=$(dirname "$1")
 DOCKERFILE=$(basename "$1")
