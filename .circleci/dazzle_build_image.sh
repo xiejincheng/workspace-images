@@ -7,10 +7,10 @@ if [ $# -le 2 ]; then
   exit 2
 fi
 
-#if [ -z "$DOCKER_USER" ]; then
-#  echo "DOCKER_USER is mandatory"
-#  exit 2
-#fi
+if [ -z "$DOCKER_USER" ]; then
+ echo "DOCKER_USER is mandatory"
+ exit 2
+fi
 
 DIR=$(dirname "$1")
 DOCKERFILE=$(basename "$1")
@@ -23,8 +23,8 @@ BUILD_TAG="build-branch-$(echo "$CIRCLE_BRANCH" | sed 's_/_-_g')"
 # Use heredoc to avoid variable getting exposed in trace output.
 # Use << (<<< herestring is not available in busybox ash).
 # We'll be pushing images using docker.io/gitpod thus must login accordingly
-docker login -u "jinchengxie123" --password-stdin docker.io << EOF
-,Eps/Hq6z2N;<=f
+docker login -u "$DOCKER_USER" --password-stdin docker.io << EOF
+$DOCKER_PASS
 EOF
 
 cd "$DIR"
