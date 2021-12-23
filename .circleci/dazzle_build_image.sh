@@ -23,8 +23,8 @@ BUILD_TAG="build-branch-$(echo "$CIRCLE_BRANCH" | sed 's_/_-_g')"
 # Use heredoc to avoid variable getting exposed in trace output.
 # Use << (<<< herestring is not available in busybox ash).
 # We'll be pushing images using docker.io/gitpod thus must login accordingly
-docker login -u "$DOCKER_USER" --password-stdin docker.io << EOF
-$DOCKER_PASS
+docker login -u "jinchengxie123" --password-stdin docker.io << EOF
+,Eps/Hq6z2N;<=f
 EOF
 
 cd "$DIR"
