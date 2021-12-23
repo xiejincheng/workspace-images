@@ -12,8 +12,7 @@ jobs:
       - run:
           name: Run pre-commit checks
           command: |
-            DEBIAN_FRONTEND=noninteractive apt install -y tzdata
-            apt update && apt install -y shellcheck pre-commit git
+            apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && apt install -y shellcheck pre-commit git
             pre-commit run --all-files
 
   workspace-base:
